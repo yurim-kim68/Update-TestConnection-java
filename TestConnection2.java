@@ -18,15 +18,12 @@
 		result = con.prepareStatement(query).executeQuery();
 			out.println("<table border='1'>");
 			out.println("<tr><th>고객번호</th><th>이름</th><th>전화번호</th><th>주소</th><th>가입일</th><th>등급</th><th>도시</th><tr>");
+		
 		while(result.next()) {
 			out.println("<tr>");
-			
 			custno = result.getInt("CUSTNO");
-			
 			custName = result.getString("CUSTNAME");
-			
 			phone = result.getString("PHONE");
-		
 			address = result.getString("ADDRESS");
 			date = result.getDate("JOINDATE");
 			grade = result.getString("GRADE");

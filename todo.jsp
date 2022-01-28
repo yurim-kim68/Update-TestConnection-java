@@ -5,43 +5,41 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>Insert title here</title>
+<title>ToDo List</title>
 </head>
 <body>
-<!--  Step 1: Create HTML form -->
 <form action="todo.jsp">
-	Add new item: <input type="text" name="theItem" />
-	<input type="submit" value="제출"/>
+Add new item: <input type="text" name="todoItem">
+<input type="submit" value="제출">
 </form>
-
-<!--  Step 2: Add new item to "To Do" list -->
 <%
-	//get the To Do items from the session
-	List<String> items =
-		(List<String>) session.getAttribute("myToDoList");
+	List<String> nameList = 
+		(List<String>)session.getAttribute("myToDoList");
+	if( nameList == null) {
+		nameList = new ArrayList<String>();
+	}
+
+	String pName = request.getParameter("todoItem");
+
+	//String sName = (String)session.getAttribute("myToDoList");
+	if( pName != null && !pName.isEmpty()) {
 		
-	//if the TO Do items doesn't exist, then create a new one
-	if (items == null) {
-		items = new ArrayList<String>();
-		session.setAttribute("myToDoList", items);
+		nameList.add(pName);
+		
+		session.setAttribute("myToDoList", nameList);
 	}
-
-	//see if there is form data to add
-	String theItem = request.getParameter("theItem");
-	if (theItem != null) {
-		items.add(theItem);
-	}
+	
 %>
-<!--  Step 3: Display all "To Do" item from session -->
-<hr>
-<b>To List Items:</b> <br/>
-
-<ol>
+<%-- <p>이름은: <%= session.getAttribute("myToDoList") %> 입니다.</p> --%>
 <%
-	for (String temp : items) {
-		out.println("<li>" + temp + "</li>");
+	for(String name : nameList ) {
+		out.println(name + "<br>");
 	}
 %>
-</ol>
+
+<p>이름은: <%= pName %> 입니다.</p>
+
+
+
 </body>
 </html>
